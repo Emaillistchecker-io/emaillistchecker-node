@@ -1,0 +1,37 @@
+{
+  "name": "emaillistchecker",
+  "version": "1.0.0",
+  "description": "Official Node.js SDK for EmailListChecker email verification API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Emaillistchecker-io/emaillistchecker-node.git"
+  },
+  "keywords": [
+    "email",
+    "verification",
+    "validation",
+    "checker",
+    "email-validation",
+    "email-verification",
+    "api",
+    "sdk",
+    "emaillistchecker"
+  ],
+  "author": "EmailListChecker <developers@emaillistchecker.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Emaillistchecker-io/emaillistchecker-node/issues"
+  },
+  "homepage": "https://emaillistchecker.io",
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
