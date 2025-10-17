@@ -141,6 +141,66 @@ const client = new EmailListChecker('your_api_key');
 })();
 ```
 
+### Batch Verification with File Upload
+
+You can also upload CSV, TXT, or XLSX files for batch verification:
+
+```javascript
+const EmailListChecker = require('emaillistchecker');
+const fs = require('fs');
+
+const client = new EmailListChecker('your_api_key');
+
+(async () => {
+  try {
+    // Upload file for batch verification (file path)
+    const batch = await client.verifyBatchFile(
+      'path/to/emails.csv',
+      'My Email List',
+      null,  // callback URL (optional)
+      true   // auto-start
+    );
+
+    const batchId = batch.id;
+    console.log(`Batch ID: ${batchId}`);
+    console.log(`Total emails: ${batch.total_emails}`);
+    console.log(`Filename: ${batch.filename}`);
+
+    // Or upload using Buffer
+    const fileBuffer = fs.readFileSync('emails.csv');
+    const batch2 = await client.verifyBatchFile(fileBuffer, 'My List');
+
+    // Or upload using Stream
+    const fileStream = fs.createReadStream('emails.xlsx');
+    const batch3 = await client.verifyBatchFile(fileStream, 'My List');
+
+    // Check progress (same as JSON batch)
+    let status;
+    do {
+      await new Promise(resolve => setTimeout(resolve, 5000));
+      status = await client.getBatchStatus(batchId);
+      console.log(`Progress: ${status.progress}%`);
+    } while (status.status !== 'completed');
+
+    // Download results
+    const results = await client.getBatchResults(batchId, 'csv', 'valid');
+  } catch (error) {
+    console.error('Error:', error.message);
+  }
+})();
+```
+
+**Supported file formats:**
+- CSV (.csv) - Comma-separated values
+- TXT (.txt) - Plain text, one email per line
+- Excel (.xlsx, .xls) - Excel spreadsheet
+
+**File requirements:**
+- Max file size: 10MB
+- Max emails: 10,000 per file
+- Files are automatically parsed to extract emails
+- Supports file paths, Buffers, and Streams
+
 ### Email Finder
 
 ```javascript
